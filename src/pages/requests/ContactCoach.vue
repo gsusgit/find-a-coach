@@ -29,11 +29,9 @@ export default {
     submitForm() {
       this.formIsValid = true
       if (this.email === '' || !this.isValidEmail()) {
-        console.log('not valid email')
         this.formIsValid = false
       }
       if (this.message === '') {
-        console.log('not valid message')
         this.formIsValid = false
       }
 

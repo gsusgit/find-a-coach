@@ -4,7 +4,6 @@
     <header>
       <h3>Received Requests</h3>
     </header>
-    <!-- [Vue warn]: Property "hasRequests" was accessed during render but is not defined on instance.  -->
     <ul v-if="hasRequests">
       <request-item
         v-for="request in receivedRequests"
