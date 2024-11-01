@@ -7,7 +7,7 @@ export default {
             description: data.desc,
             hourlyRate: data.rate,
             areas: data.areas
-        };
-        context.commit('addCoach', coachData);
+        }
+        context.commit('addCoach', coachData)
     }
-};
+}

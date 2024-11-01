@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import CoachItem from '../../components/coaches/CoachItem.vue';
-import CoachFilter from '../../components/coaches/CoachFilter.vue';
+import CoachItem from '../../components/coaches/CoachItem.vue'
+import CoachFilter from '../../components/coaches/CoachFilter.vue'
 
 export default {
   data() {
@@ -35,32 +35,32 @@ export default {
       activeFilters: {
         frontend: true,
         backend: true,
-        careers: true,
-      },
-    };
+        careers: true
+      }
+    }
   },
   components: {
     CoachItem,
-    CoachFilter,
+    CoachFilter
   },
   computed: {
     filteredCoaches() {
-      const coaches = this.$store.getters['coaches/coaches'];
-      return coaches.filter((coach) => coach.areas.some((area) => this.activeFilters[area] === true));
+      const coaches = this.$store.getters['coaches/coaches']
+      return coaches.filter((coach) => coach.areas.some((area) => this.activeFilters[area] === true))
     },
     hasCoaches() {
-      return this.$store.getters['coaches/hasCoaches'];
+      return this.$store.getters['coaches/hasCoaches']
     },
     isCoach() {
-      return this.$store.getters['coaches/isCoach'];
+      return this.$store.getters['coaches/isCoach']
     }
   },
   methods: {
     updateCoachesList(updatedFilters) {
-      this.activeFilters = updatedFilters;
-    },
-  },
-};
+      this.activeFilters = updatedFilters
+    }
+  }
+}
 </script>
 
 <style scoped>

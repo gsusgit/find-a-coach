@@ -25,22 +25,22 @@ export default {
         backend: true,
         careers: true
       }
-    };
+    }
   },
-  emits: ['update-coaches-list'],
+  emits: ["update-coaches-list"],
   methods: {
     setFilter(event) {
-      const inputId = event.target.id;
-      const isActive = event.target.checked;
+      const inputId = event.target.id
+      const isActive = event.target.checked
       const updatedFilters = {
         ...this.filters,
         [inputId]: isActive
-      };
-      this.filters = updatedFilters;
-      this.$emit('update-coaches-list', updatedFilters);
+      }
+      this.filters = updatedFilters
+      this.$emit("update-coaches-list", updatedFilters)
     }
   }
-};
+}
 </script>
 
 <style scoped>
