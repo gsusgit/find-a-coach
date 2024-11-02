@@ -28,6 +28,7 @@ export default {
   methods: {
     submitForm() {
       this.formIsValid = true
+      
       if (this.email === '' || !this.isValidEmail()) {
         this.formIsValid = false
       }
@@ -38,6 +39,8 @@ export default {
       if (!this.formIsValid) {
         return
       }
+
+      // TODO: add to Firebase
       this.$store.dispatch('requests/contactCoach', {
         coachId: this.$route.params.id,
         email: this.email,

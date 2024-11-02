@@ -28,6 +28,7 @@
           id="frontend"
           value="frontend"
           v-model="areas.val"
+          FIXME: thtoe error in console
           @blur="clearValidity('careers')"
         />
         <label for="frontend">Frontend</label>
@@ -38,6 +39,7 @@
           id="backend"
           value="backend"
           v-model="areas.val"
+          FIXME: thtoe error in console
           @blur="clearValidity('careers')"
         />
         <label for="backend">Backend</label>
@@ -48,6 +50,7 @@
           id="careers"
           value="careers"
           v-model="areas.val"
+          FIXME: thtoe error in console
           @blur="clearValidity('careers')"
         />
         <label for="careers">Career Advisory</label>
@@ -93,6 +96,7 @@ export default {
     },
     validateForm() {
       this.formIsValid = true;
+      
       if (this.firstName.val === '') {
         this.firstName.isValid = false;
         this.formIsValid = false;
