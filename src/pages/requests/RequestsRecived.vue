@@ -1,26 +1,28 @@
 <template>
-  <base-dialog :show="!!error" title="Error fetching" @close="handleError">
-    <p>{{ error }}</p>
-  </base-dialog>
-  <section v-if="isLoading">
-    <base-spinner></base-spinner>
-  </section>
-  <section v-else>
-    <base-card>
-    <header>
-      <h3>Received Requests</h3>
-    </header>
-    <ul v-if="hasRequests">
-      <request-item
-        v-for="request in receivedRequests"
-        :key="request.id"
-        :email="request.userEmail"
-        :message="request.userMessage"
-      ></request-item>
-    </ul>
-    <p v-else>You haven't received any request yet!</p>
-  </base-card>
-  </section>
+  <div>
+    <base-dialog :show="!!error" title="Error fetching" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <section v-if="isLoading">
+      <base-spinner></base-spinner>
+    </section>
+    <section v-else>
+      <base-card>
+        <header>
+          <h3>Received Requests</h3>
+        </header>
+        <ul v-if="hasRequests">
+          <request-item
+            v-for="request in receivedRequests"
+            :key="request.id"
+            :email="request.userEmail"
+            :message="request.userMessage"
+          ></request-item>
+        </ul>
+        <p v-else>You haven't received any request yet!</p>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -47,7 +49,7 @@ export default {
   methods: {
     async getRequests() {
       const coachId = this.$store.getters['userId']
-      
+
       this.isLoading = true
       try {
         await this.$store.dispatch('requests/getRequests', coachId)
@@ -78,7 +80,8 @@ ul {
   max-width: 30rem;
 }
 
-h3, p {
+h3,
+p {
   text-align: center;
 }
 </style>

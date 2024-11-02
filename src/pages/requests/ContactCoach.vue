@@ -1,24 +1,26 @@
 <template>
-  <base-dialog :show="!!error" title="Error fetching" @close="handleError">
-    <p>{{ error }}</p>
-  </base-dialog>
-  <section v-if="isLoading">
-    <base-spinner></base-spinner>
-  </section>
-  <form v-else @submit.prevent="submitForm">
-    <div class="form-control">
-      <label for="email">Your Email</label>
-      <input type="email" id="email" v-model="email" />
-    </div>
-    <div class="form-control">
-      <label for="message">Message</label>
-      <textarea id="message" rows="5" v-model="message"></textarea>
-    </div>
-    <p v-if="!formIsValid" class="errors">
-      Please enter a valid email and message
-    </p>
-    <base-button>Send Message</base-button>
-  </form>
+  <div>
+    <base-dialog :show="!!error" title="Error fetching" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <section v-if="isLoading">
+      <base-spinner></base-spinner>
+    </section>
+    <form v-else @submit.prevent="submitForm">
+      <div class="form-control">
+        <label for="email">Your Email</label>
+        <input type="email" id="email" v-model="email" />
+      </div>
+      <div class="form-control">
+        <label for="message">Message</label>
+        <textarea id="message" rows="5" v-model="message"></textarea>
+      </div>
+      <p v-if="!formIsValid" class="errors">
+        Please enter a valid email and message
+      </p>
+      <base-button>Send Message</base-button>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -36,7 +38,7 @@ export default {
   methods: {
     async submitForm() {
       this.formIsValid = true
-      
+
       if (this.email === '' || !this.isValidEmail()) {
         this.formIsValid = false
       }
@@ -57,7 +59,7 @@ export default {
         this.$router.replace('/coaches')
       } catch (error) {
         this.error = error.message || 'Something went wrong'
-      }      
+      }
       this.isLoading = false
     },
     handleError() {

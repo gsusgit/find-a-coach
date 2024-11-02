@@ -1,13 +1,15 @@
 <template>
-  <base-dialog :show="!!error" title="Error saving" @close="handleError">
-    <p>{{ error }}</p>
-  </base-dialog>
-  <section>
-    <base-card>
-      <h2>Register as a coach now!</h2>
-      <coach-form @add-coach="addCoach"></coach-form>
-    </base-card>
-  </section>
+  <div>
+    <base-dialog :show="!!error" title="Error saving" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <section>
+      <base-card>
+        <h2>Register as a coach now!</h2>
+        <coach-form @add-coach="addCoach"></coach-form>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -35,5 +37,5 @@ export default {
       this.error = null
     }
   }
-};
+}
 </script>
