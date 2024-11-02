@@ -1,28 +1,38 @@
 <template>
-  <section>
-    <coach-filter @update-coaches-list="updateCoachesList"></coach-filter>
+  <base-dialog :show="!!error" title="Error fetching" @close="handleError">
+    <p>{{ error }}</p>
+  </base-dialog>
+  <section v-if="isLoading">
+    <base-spinner></base-spinner>
   </section>
-  <section>
-    <base-card>
-      <div class="controls">
-        <base-button mode="outline">Refresh</base-button>
-        <base-button v-if="!isCoach" link to="/register">Register as Coach</base-button>
-      </div>
-      <ul v-if="hasCoaches">
-        <coach-item
-          v-for="coach in filteredCoaches"
-          :key="coach.id"
-          :id="coach.id"
-          :first-name="coach.firstName"
-          :last-name="coach.lastName"
-          :rate="coach.hourlyRate"
-          :areas="coach.areas"
-        >
-        </coach-item>
-      </ul>
-      <h3 v-else>No coaches found</h3>
-    </base-card>
-  </section>
+  <div v-else>
+    <section>
+      <coach-filter @update-coaches-list="updateCoachesList"></coach-filter>
+    </section>
+    <section>
+      <base-card>
+        <div class="controls">
+          <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
+          <base-button v-if="!isCoach" link to="/register"
+            >Register as Coach</base-button
+          >
+        </div>
+        <ul v-if="hasCoaches">
+          <coach-item
+            v-for="coach in filteredCoaches"
+            :key="coach.id"
+            :id="coach.id"
+            :first-name="coach.firstName"
+            :last-name="coach.lastName"
+            :rate="coach.hourlyRate"
+            :areas="coach.areas"
+          >
+          </coach-item>
+        </ul>
+        <h3 v-else>No coaches found</h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -36,7 +46,9 @@ export default {
         frontend: true,
         backend: true,
         careers: true
-      }
+      },
+      isLoading: false,
+      error: null
     }
   },
   components: {
@@ -46,7 +58,9 @@ export default {
   computed: {
     filteredCoaches() {
       const coaches = this.$store.getters['coaches/coaches']
-      return coaches.filter((coach) => coach.areas.some((area) => this.activeFilters[area] === true))
+      return coaches.filter((coach) =>
+        coach.areas.some((area) => this.activeFilters[area] === true)
+      )
     },
     hasCoaches() {
       return this.$store.getters['coaches/hasCoaches']
@@ -58,7 +72,22 @@ export default {
   methods: {
     updateCoachesList(updatedFilters) {
       this.activeFilters = updatedFilters
+    },
+    async loadCoaches() {
+      this.isLoading = true
+      try {
+        await this.$store.dispatch('coaches/loadCoaches')
+      } catch (error) {
+        this.error = error.message || 'Something went wrong'
+      }
+      this.isLoading = false
+    },
+    handleError() {
+      this.error = null
     }
+  },
+  created() {
+    this.loadCoaches()
   }
 }
 </script>
