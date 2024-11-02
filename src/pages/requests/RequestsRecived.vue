@@ -1,5 +1,11 @@
 <template>
-  <section>
+  <base-dialog :show="!!error" title="Error fetching" @close="handleError">
+    <p>{{ error }}</p>
+  </base-dialog>
+  <section v-if="isLoading">
+    <base-spinner></base-spinner>
+  </section>
+  <section v-else>
     <base-card>
     <header>
       <h3>Received Requests</h3>
@@ -21,6 +27,12 @@
 import RequestItem from '../../components/requests/RequestItem.vue'
 
 export default {
+  data() {
+    return {
+      isLoading: false,
+      error: null
+    }
+  },
   components: {
     RequestItem
   },
@@ -31,6 +43,25 @@ export default {
     hasRequests() {
       return this.$store.getters['requests/hasRequests']
     }
+  },
+  methods: {
+    async getRequests() {
+      const coachId = this.$store.getters['userId']
+      
+      this.isLoading = true
+      try {
+        await this.$store.dispatch('requests/getRequests', coachId)
+      } catch (error) {
+        this.error = error.message || 'Something went wrong'
+      }
+      this.isLoading = false
+    },
+    handleError() {
+      this.error = null
+    }
+  },
+  created() {
+    this.getRequests()
   }
 }
 </script>

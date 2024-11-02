@@ -1,5 +1,11 @@
 <template>
-  <form @submit.prevent="submitForm">
+  <base-dialog :show="!!error" title="Error fetching" @close="handleError">
+    <p>{{ error }}</p>
+  </base-dialog>
+  <section v-if="isLoading">
+    <base-spinner></base-spinner>
+  </section>
+  <form v-else @submit.prevent="submitForm">
     <div class="form-control">
       <label for="email">Your Email</label>
       <input type="email" id="email" v-model="email" />
@@ -21,12 +27,14 @@ export default {
     return {
       email: '',
       message: '',
-      formIsValid: true
+      formIsValid: true,
+      isLoading: false,
+      error: null
     }
   },
   emits: ['send-request'],
   methods: {
-    submitForm() {
+    async submitForm() {
       this.formIsValid = true
       
       if (this.email === '' || !this.isValidEmail()) {
@@ -35,19 +43,25 @@ export default {
       if (this.message === '') {
         this.formIsValid = false
       }
-
       if (!this.formIsValid) {
         return
       }
 
-      // TODO: add to Firebase
-      this.$store.dispatch('requests/contactCoach', {
-        coachId: this.$route.params.id,
-        email: this.email,
-        message: this.message
-      })
-      
-      this.$router.replace('/coaches')
+      this.isLoading = true
+      try {
+        await this.$store.dispatch('requests/contactCoach', {
+          coachId: this.$route.params.id,
+          email: this.email,
+          message: this.message
+        })
+        this.$router.replace('/coaches')
+      } catch (error) {
+        this.error = error.message || 'Something went wrong'
+      }      
+      this.isLoading = false
+    },
+    handleError() {
+      this.error = null
     },
     isValidEmail() {
       const emailRegex = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/
