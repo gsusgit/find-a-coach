@@ -28,8 +28,7 @@
           id="frontend"
           value="frontend"
           v-model="areas.val"
-          FIXME: thtoe error in console
-          @blur="clearValidity('careers')"
+          @blur="clearValidity('areas')"
         />
         <label for="frontend">Frontend</label>
       </div>
@@ -39,8 +38,7 @@
           id="backend"
           value="backend"
           v-model="areas.val"
-          FIXME: thtoe error in console
-          @blur="clearValidity('careers')"
+          @blur="clearValidity('areas')"
         />
         <label for="backend">Backend</label>
       </div>
@@ -50,8 +48,7 @@
           id="careers"
           value="careers"
           v-model="areas.val"
-          FIXME: thtoe error in console
-          @blur="clearValidity('careers')"
+          @blur="clearValidity('areas')"
         />
         <label for="careers">Career Advisory</label>
       </div>
