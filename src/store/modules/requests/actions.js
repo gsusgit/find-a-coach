@@ -34,6 +34,11 @@ export default {
 
     const responseData = await response.json()
 
+    if (!response.ok) {
+      const error = new Error(response.message || 'Failed to get requests')
+      throw error
+    }
+
     const requests = []
 
     for (const key in responseData) {
