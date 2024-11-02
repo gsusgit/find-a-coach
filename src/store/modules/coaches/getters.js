@@ -9,5 +9,13 @@ export default {
     const coaches = getters.coaches
     const userId = rootGetters.userId
     return coaches.some((coach) => coach.id === userId)
+  },
+  shouldUpdate(state) {
+    const lastUpdate = state.lastFetch
+    if (!lastUpdate) {
+      return true
+    }
+    const now = new Date().getTime()
+    return (now - lastUpdate) / 1000 > 60
   }
 }
